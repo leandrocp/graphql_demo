@@ -5,11 +5,16 @@ defmodule RockStoreWeb.Schema do
   alias RockStoreWeb.BandResolver
   alias RockStoreWeb.AlbumResolver
 
+  scalar :country, description: "Full name of a Country" do
+    parse fn data -> data end
+    serialize fn data -> data end
+  end
+
   @desc "A rock band"
   object :band do
     field :id, non_null(:id)
     field :name, non_null(:string), description: "Full name"
-    field :location, non_null(:string), description: "Country of origin"
+    field :location, non_null(:country), description: "Country of origin"
     field :bio, non_null(:string), description: "Short bio"
     field :rating, non_null(:integer), description: "From 0 to 100"
     field :albums, list_of(:album), resolve: assoc(:albums)
