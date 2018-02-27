@@ -24,14 +24,14 @@ defmodule RockStoreWeb.Schema do
   end
 
   query do
-    field :bands, non_null(list_of(non_null(:band))) do
+    field :bands, list_of(:band) do
       description "All bands"
       arg :name, :string, description: "Filter by name"
       arg :location, :string, description: "Filter by location"
       resolve &BandResolver.all_bands/3
     end
 
-    field :albums, non_null(list_of(non_null(:album))) do
+    field :albums, list_of(:album) do
       description "Full catalog of albums"
       arg :year, :string, description: "Filter by year"
       resolve &AlbumResolver.all_albums/3

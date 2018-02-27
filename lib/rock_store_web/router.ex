@@ -8,9 +8,9 @@ defmodule RockStoreWeb.Router do
   scope "/" do
     pipe_through :api
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
+    forward "/graphiql",
+      Absinthe.Plug.GraphiQL,
       schema: RockStoreWeb.Schema,
-      interface: :simple,
-      context: %{pubsub: RockStoreWeb.Endpoint}
+      interface: :simple
   end
 end
