@@ -20,5 +20,6 @@ defmodule RockStore.Domain.Band do
     band
     |> cast(attrs, [:name, :location, :bio, :rating])
     |> validate_required([:name, :location, :bio, :rating])
+    |> unique_constraint(:name)
   end
 end

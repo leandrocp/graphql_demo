@@ -26,10 +26,19 @@ defmodule RockStoreWeb.BandResolver do
 
   def register_band(_root, args, _info) do
     case Domain.create_band(args) do
-      {:ok, band} ->
-        {:ok, band}
-      _error ->
-        {:error, "Could not register band!"}
+      {:error, changeset} ->
+        {
+          :error,
+          message: "Could not register band!",
+          details: error_details(changeset)
+        }
+      success ->
+        success
     end
+  end
+
+  def error_details(changeset) do
+    changeset
+    |> Ecto.Changeset.traverse_errors(fn {msg, _} -> msg end)
   end
 end
