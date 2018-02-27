@@ -11,7 +11,7 @@ defmodule RockStoreWeb.BandResolver do
   end
 
   def all_bands(_root, %{location: location}, _info) do
-    case Domain.filter_by_location(location) do
+    case Domain.filter_bands_by_location(location) do
       nil ->
         {:error, "Band from #{location} not found"}
       bands ->

@@ -33,6 +33,7 @@ defmodule RockStoreWeb.Schema do
 
     field :albums, non_null(list_of(non_null(:album))) do
       description "Full catalog of albums"
+      arg :year, :string, description: "Filter by year"
       resolve &AlbumResolver.all_albums/3
     end
   end

@@ -54,20 +54,18 @@ defmodule RockStore.Domain do
   def get_band_by_name(name), do: Repo.get_by(Band, name: name)
 
   @doc """
-  Gets a single band by location.
-
-  Raises `Ecto.NoResultsError` if the Band does not exist.
+  Filter bands by location.
 
   ## Examples
 
-      iex> get_band_by_location(location: "Moon")
+      iex> filter_bands_by_location("Earth")
       %Band{}
 
-      iex> get_band_by_location(location: "Mars")
-      ** (Ecto.NoResultsError)
+      iex> filter_bands_by_location("Moon")
+      nil
 
   """
-  def filter_by_location(location) do
+  def filter_bands_by_location(location) do
     Repo.all(
       from b in Band, where: ilike(b.location, ^"%#{location}%")
     )
@@ -232,5 +230,23 @@ defmodule RockStore.Domain do
   """
   def change_album(%Album{} = album) do
     Album.changeset(album, %{})
+  end
+
+  @doc """
+  Filter albums by year.
+
+  ## Examples
+
+      iex> filter_albums_by_year(1970)
+      %Album{}
+
+      iex> filter_albums_by_year(3000)
+      nil
+
+  """
+  def filter_albums_by_year(year) do
+    Repo.all(
+      from a in Album, where: a.year == ^year
+    )
   end
 end
