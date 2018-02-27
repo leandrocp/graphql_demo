@@ -8,9 +8,9 @@ defmodule RockStoreWeb.Schema do
   @desc "A rock band"
   object :band do
     field :id, non_null(:id)
-    field :bio, non_null(:string), description: "Short bio"
-    field :location, non_null(:string), description: "Country of origin"
     field :name, non_null(:string), description: "Full name"
+    field :location, non_null(:string), description: "Country of origin"
+    field :bio, non_null(:string), description: "Short bio"
     field :rating, non_null(:integer), description: "From 0 to 100"
     field :albums, list_of(:album), resolve: assoc(:albums)
   end
@@ -35,6 +35,17 @@ defmodule RockStoreWeb.Schema do
       description "Full catalog of albums"
       arg :year, :string, description: "Filter by year"
       resolve &AlbumResolver.all_albums/3
+    end
+  end
+
+  mutation do
+    field :register_band, :band do
+      description "Register a new Band into the catalog"
+      arg :name, non_null(:string)
+      arg :location, non_null(:string)
+      arg :bio, non_null(:string)
+      arg :rating, non_null(:integer)
+      resolve &BandResolver.register_band/3
     end
   end
 end

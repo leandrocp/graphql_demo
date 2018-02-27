@@ -23,4 +23,13 @@ defmodule RockStoreWeb.BandResolver do
     bands = Domain.list_bands
     {:ok, bands}
   end
+
+  def register_band(_root, args, _info) do
+    case Domain.create_band(args) do
+      {:ok, band} ->
+        {:ok, band}
+      _error ->
+        {:error, "Could not register band!"}
+    end
+  end
 end
