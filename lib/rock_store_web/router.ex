@@ -5,7 +5,12 @@ defmodule RockStoreWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", RockStoreWeb do
+  scope "/" do
     pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: RockStoreWeb.Schema,
+      interface: :simple,
+      context: %{pubsub: RockStoreWeb.Endpoint}
   end
 end
