@@ -3,7 +3,9 @@ defmodule RockStoreWeb.Schema do
   use Absinthe.Ecto, repo: RockStore.Repo
 
   alias RockStoreWeb.BandResolver
+  alias RockStoreWeb.AlbumResolver
 
+  @desc "A rock band"
   object :band do
     field :id, non_null(:id)
     field :bio, non_null(:string), description: "Short bio"
@@ -13,6 +15,7 @@ defmodule RockStoreWeb.Schema do
     field :albums, list_of(:album), resolve: assoc(:albums)
   end
 
+  @desc "Album of a rock band"
   object :album do
     field :id, non_null(:id)
     field :name, non_null(:string), description: "Full name"
@@ -23,6 +26,8 @@ defmodule RockStoreWeb.Schema do
   query do
     field :bands, non_null(list_of(non_null(:band))) do
       description "All bands"
+      arg :name, :string, description: "Filter by name"
+      arg :location, :string, description: "Filter by location"
       resolve &BandResolver.all_bands/3
     end
 

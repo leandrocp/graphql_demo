@@ -38,6 +38,42 @@ defmodule RockStore.Domain do
   def get_band!(id), do: Repo.get!(Band, id)
 
   @doc """
+  Gets a single band by name.
+
+  Raises `Ecto.NoResultsError` if the Band does not exist.
+
+  ## Examples
+
+      iex> get_band_by_name(name: "My Band")
+      %Band{}
+
+      iex> get_band_by_name(name: "Invalid")
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_band_by_name(name), do: Repo.get_by(Band, name: name)
+
+  @doc """
+  Gets a single band by location.
+
+  Raises `Ecto.NoResultsError` if the Band does not exist.
+
+  ## Examples
+
+      iex> get_band_by_location(location: "Moon")
+      %Band{}
+
+      iex> get_band_by_location(location: "Mars")
+      ** (Ecto.NoResultsError)
+
+  """
+  def filter_by_location(location) do
+    Repo.all(
+      from b in Band, where: ilike(b.location, ^"%#{location}%")
+    )
+  end
+
+  @doc """
   Creates a band.
 
   ## Examples
