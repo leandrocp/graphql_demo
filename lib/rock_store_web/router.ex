@@ -8,6 +8,10 @@ defmodule RockStoreWeb.Router do
   scope "/" do
     pipe_through :api
 
+    forward "/api",
+      Absinthe.Plug,
+      schema: RockStoreWeb.Schema
+
     forward "/graphiql",
       Absinthe.Plug.GraphiQL,
       schema: RockStoreWeb.Schema,
